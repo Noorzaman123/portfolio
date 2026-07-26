@@ -1,0 +1,84 @@
+{% extends "admin/base.html" %}
+{% block title %}Settings{% endblock %}
+{% block page_title %}Site Settings{% endblock %}
+
+{% block content %}
+<div class="admin-page-header"><h2>Site Settings</h2></div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="admin-card">
+      <div class="admin-card-header"><h5><i class="fas fa-cog me-2"></i>General Settings</h5></div>
+      <div class="admin-card-body">
+        <form method="POST" action="{{ url_for('admin.settings') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          {% set setting_fields = [
+            ('site_tagline','Site Tagline','Python Backend Developer | Full Stack Developer'),
+            ('meta_description','Default Meta Description','Computer Science graduate…'),
+            ('linkedin_url','LinkedIn Profile URL','https://www.linkedin.com/in/your-username'),
+            ('github_url','GitHub Profile URL','https://github.com/your-username'),
+            ('google_analytics_id','Google Analytics ID','G-XXXXXXXXXX'),
+            ('footer_text','Footer Text','Built with Python Flask'),
+          ] %}
+          {% for key, label, placeholder in setting_fields %}
+          <div class="mb-3">
+            <label class="form-label">{{ label }}</label>
+            <input type="text" name="{{ key }}" class="form-control admin-input"
+                   value="{{ settings.get(key, '') }}" placeholder="{{ placeholder }}" />
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-admin-primary">
+            <i class="fas fa-save me-2"></i>Save Settings
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <!-- Profile Photo Upload -->
+    <div class="admin-card mb-4">
+      <div class="admin-card-header"><h5><i class="fas fa-user-circle me-2"></i>Profile Picture</h5></div>
+      <div class="admin-card-body">
+        <p class="text-muted small">Upload your photo (JPG, PNG, or WEBP). It will display on your site.</p>
+        <form method="POST" action="{{ url_for('admin.profile_photo_upload') }}" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input type="file" name="profile_photo" class="form-control admin-input mb-3" accept=".jpg,.jpeg,.png,.webp" required />
+          <button type="submit" class="btn btn-admin-primary w-100">
+            <i class="fas fa-camera me-2"></i>Upload Profile Picture
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Resume Upload -->
+    <div class="admin-card mb-4">
+      <div class="admin-card-header"><h5><i class="fas fa-file-pdf me-2"></i>Resume PDF</h5></div>
+      <div class="admin-card-body">
+        <p class="text-muted small">Upload your resume PDF (filename will be standardized to Noor_Zaman_Resume.pdf).</p>
+        <form method="POST" action="{{ url_for('admin.resume_upload') }}" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input type="file" name="resume" class="form-control admin-input mb-3" accept=".pdf" required />
+          <button type="submit" class="btn btn-admin-primary w-100">
+            <i class="fas fa-upload me-2"></i>Upload Resume
+          </button>
+        </form>
+        <hr style="border-color:var(--admin-border)">
+        <a href="{{ url_for('main.download_resume') }}" target="_blank" class="btn btn-outline-admin w-100">
+          <i class="fas fa-download me-2"></i>Test Download
+        </a>
+      </div>
+    </div>
+
+    <!-- Account Info -->
+    <div class="admin-card">
+      <div class="admin-card-header"><h5><i class="fas fa-user me-2"></i>Account</h5></div>
+      <div class="admin-card-body">
+        <p><strong>Username:</strong> {{ current_user.username }}</p>
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <p class="text-muted small">To change password, update the seed_db.py file and re-seed, or use Flask shell.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

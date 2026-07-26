@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Experience – Noor Zaman{% endblock %}
+{% block meta_description %}Professional experience of Noor Zaman including internships at Arch Technologies and National Telecommunication Corporation (NTC).{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Career</span>
+      <h1 class="page-title">Professional <span class="gradient-text">Experience</span></h1>
+      <p class="page-subtitle">Where I've worked and what I've accomplished along the way.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    {% if experiences %}
+    <div class="experience-timeline">
+      {% for exp in experiences %}
+      <div class="exp-item" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+        <div class="exp-timeline-dot"></div>
+        <div class="exp-card glass-card">
+          <div class="exp-header">
+            <div class="exp-company-logo">
+              {% if exp.company_logo %}
+                <img src="{{ exp.company_logo }}" alt="{{ exp.company }}" />
+              {% else %}
+                <div class="company-initial">{{ exp.company[0] }}</div>
+              {% endif %}
+            </div>
+            <div class="exp-title-block">
+              <h2 class="exp-role">{{ exp.title }}</h2>
+              <div class="exp-company-info">
+                <span class="exp-company">
+                  {% if exp.company_url %}
+                    <a href="{{ exp.company_url }}" target="_blank" rel="noopener">{{ exp.company }}</a>
+                  {% else %}
+                    {{ exp.company }}
+                  {% endif %}
+                </span>
+                {% if exp.location %}
+                  <span class="exp-sep">·</span>
+                  <span class="exp-location"><i class="fas fa-map-marker-alt me-1"></i>{{ exp.location }}</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="exp-period-badge">
+              <i class="fas fa-calendar-alt me-1"></i>
+              {{ exp.start_date }} – {{ 'Present' if exp.is_current else exp.end_date }}
+              {% if exp.is_current %}
+                <span class="current-badge ms-2">Current</span>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if exp.description %}
+          <p class="exp-description">{{ exp.description }}</p>
+          {% endif %}
+
+          {% if exp.achievements %}
+          <div class="exp-achievements">
+            <h4 class="achievements-title"><i class="fas fa-trophy me-2 text-warning"></i>Key Achievements</h4>
+            <ul class="achievements-list">
+              {% for achievement in exp.achievements %}
+              <li>
+                <i class="fas fa-check-circle text-primary me-2"></i>
+                {{ achievement }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state text-center py-5">
+      <i class="fas fa-briefcase fa-3x mb-3" style="color:var(--text-muted)"></i>
+      <h4>Experience details coming soon</h4>
+    </div>
+    {% endif %}
+
+    <!-- CTA -->
+    <div class="text-center mt-5" data-aos="fade-up">
+      <p class="text-muted mb-3">Want to know more about my professional journey?</p>
+      <a href="{{ url_for('main.download_resume') }}" class="btn btn-primary-glow me-3">
+        <i class="fas fa-download me-2"></i>Download Full Resume
+      </a>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-glass">
+        <i class="fas fa-envelope me-2"></i>Get In Touch
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

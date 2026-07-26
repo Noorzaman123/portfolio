@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Services – Noor Zaman{% endblock %}
+{% block meta_description %}Professional Python development, Flask applications, REST API design, web scraping, database engineering, and cybersecurity consulting services.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">What I Offer</span>
+      <h1 class="page-title">My <span class="gradient-text">Services</span></h1>
+      <p class="page-subtitle">Professional development services tailored to your business needs.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    {% set services = [
+      ('Python Development','fas fa-snake','Build scripts, automation tools, data pipelines, and desktop applications using Python. Clean, efficient, and well-documented code.','#6366f1',['Automation Scripts','Data Processing','CLI Tools','Task Schedulers']),
+      ('Backend Development','fas fa-server','Design and build robust server-side applications. Scalable architectures with proper separation of concerns and industry best practices.','#8b5cf6',['RESTful APIs','Microservices','WebSocket Apps','Authentication Systems']),
+      ('REST API Development','fas fa-exchange-alt','Create well-documented, secure, and scalable REST APIs using Flask or FastAPI. Full OpenAPI documentation included.','#06b6d4',['CRUD APIs','JWT Authentication','Rate Limiting','API Documentation']),
+      ('Flask Applications','fas fa-flask','End-to-end Flask web application development — from database design to deployment. Admin panels, dashboards, and full-stack apps.','#10b981',['Admin Dashboards','Blog Platforms','E-commerce Backends','Portfolio Sites']),
+      ('Database Design','fas fa-database','Design normalized, efficient database schemas. Query optimization, migration scripts, and ORM integration with SQLAlchemy.','#f59e0b',['Schema Design','Query Optimization','Data Migrations','ORM Integration']),
+      ('Web Scraping','fas fa-spider','Extract structured data from websites using BeautifulSoup, Scrapy, or Selenium. Automated and scheduled scrapers.','#ec4899',['Data Extraction','Price Monitoring','Content Aggregation','Scheduled Scrapers']),
+      ('Automation Scripts','fas fa-robot','Build custom automation solutions to streamline repetitive workflows. Email bots, file processors, and API integrations.','#f97316',['Email Automation','File Processors','API Integrations','Workflow Automation']),
+      ('Cybersecurity Consultation','fas fa-shield-alt','Basic security assessment, secure coding review, and vulnerability identification for web applications.','#ef4444',['Security Audits','Code Reviews','Best Practices','Vulnerability Reports']),
+    ] %}
+
+    <div class="row g-4">
+      {% for title, icon, desc, color, items in services %}
+      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 % 2 * 100 }}">
+        <div class="service-card glass-card h-100">
+          <div class="service-icon" style="--svc-color:{{ color }}">
+            <i class="{{ icon }}"></i>
+          </div>
+          <div class="service-body">
+            <h3 class="service-title">{{ title }}</h3>
+            <p class="service-desc">{{ desc }}</p>
+            <ul class="service-features">
+              {% for item in items %}
+              <li><i class="fas fa-check me-2" style="color:{{ color }}"></i>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="service-footer">
+            <a href="{{ url_for('main.contact') }}" class="btn-text-link" style="color:{{ color }}">
+              Get a Quote <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card glass-card text-center mt-5" data-aos="zoom-in">
+      <div class="cta-glow"></div>
+      <h2 class="cta-title">Have a Project in Mind?</h2>
+      <p class="cta-subtitle">I'd love to hear about your project and help you bring it to life.</p>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-primary-glow btn-lg mt-3">
+        <i class="fas fa-paper-plane me-2"></i>Let's Talk
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

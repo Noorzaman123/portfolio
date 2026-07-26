@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Resume – Noor Zaman{% endblock %}
+{% block meta_description %}Download the professional resume/CV of Noor Zaman – Python Backend Developer with Flask, Django, FastAPI, and cybersecurity expertise.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Credentials</span>
+      <h1 class="page-title">My <span class="gradient-text">Resume</span></h1>
+      <p class="page-subtitle">A comprehensive overview of my skills, experience, and education.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Download Card -->
+      <div class="col-lg-4" data-aos="fade-right">
+        <div class="resume-download-card glass-card text-center sticky-top" style="top:100px">
+          <div class="resume-icon mb-4">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <h3>Noor Zaman</h3>
+          <p class="text-muted mb-1">Python Backend Developer</p>
+          <p class="text-muted mb-4">Full Stack Developer | Cybersecurity Enthusiast</p>
+          <a href="{{ url_for('main.download_resume') }}" class="btn btn-primary-glow w-100 mb-3">
+            <i class="fas fa-download me-2"></i>Download PDF Resume
+          </a>
+          <a href="{{ site_settings.get('linkedin_url', 'https://www.linkedin.com/in/noor-zaman-99b806291') | external_url }}" target="_blank" rel="noopener" class="btn btn-glass w-100">
+            <i class="fab fa-linkedin-in me-2"></i>View LinkedIn
+          </a>
+
+          <hr class="my-4" style="border-color:var(--border)">
+
+          <div class="contact-info-resume">
+            <div class="contact-row">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:noorzamanktk2@gmail.com">noorzamanktk2@gmail.com</a>
+            </div>
+            <div class="contact-row">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+923334791760">+92 333 4791760</a>
+            </div>
+            <div class="contact-row">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Peshawar, Pakistan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume Content -->
+      <div class="col-lg-8">
+
+        <!-- Summary -->
+        <div class="resume-section glass-card mb-4" data-aos="fade-up">
+          <h2 class="resume-section-title"><i class="fas fa-user me-2"></i>Professional Summary</h2>
+          <p>Computer Science graduate passionate about backend development, scalable web applications, cybersecurity, REST APIs, database engineering, and Python development. Experienced with Flask, Django, FastAPI, SQL, React, and machine learning fundamentals. Looking for opportunities to contribute to innovative teams and build impactful digital products.</p>
+        </div>
+
+        <!-- Experience -->
+        <div class="resume-section glass-card mb-4" data-aos="fade-up">
+          <h2 class="resume-section-title"><i class="fas fa-briefcase me-2"></i>Work Experience</h2>
+
+          <div class="resume-entry">
+            <div class="resume-entry-header">
+              <div>
+                <h3>Python Developer Intern</h3>
+                <p class="resume-company">Arch Technologies</p>
+              </div>
+              <span class="resume-period">2023</span>
+            </div>
+            <ul class="resume-bullets">
+              <li>Developed and maintained Python backend services and RESTful APIs</li>
+              <li>Collaborated with senior developers on Flask-based web applications</li>
+              <li>Wrote automation scripts to streamline internal workflows</li>
+              <li>Participated in code reviews and followed agile development practices</li>
+            </ul>
+          </div>
+
+          <hr class="resume-divider">
+
+          <div class="resume-entry">
+            <div class="resume-entry-header">
+              <div>
+                <h3>Cyber Security & Web Development Intern</h3>
+                <p class="resume-company">National Telecommunication Corporation (NTC)</p>
+              </div>
+              <span class="resume-period">2023</span>
+            </div>
+            <ul class="resume-bullets">
+              <li>Assisted in vulnerability assessments and security audits of web applications</li>
+              <li>Developed web pages and contributed to the organization's internal web projects</li>
+              <li>Studied network security principles and implemented basic security protocols</li>
+              <li>Documented security findings and provided recommendations for remediation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="resume-section glass-card mb-4" data-aos="fade-up">
+          <h2 class="resume-section-title"><i class="fas fa-graduation-cap me-2"></i>Education</h2>
+          <div class="resume-entry">
+            <div class="resume-entry-header">
+              <div>
+                <h3>Bachelor of Science in Computer Science</h3>
+                <p class="resume-company">University of Peshawar / Affiliated Institution</p>
+              </div>
+              <span class="resume-period">2020 – 2024</span>
+            </div>
+            <p>Relevant coursework: Data Structures, Algorithms, Software Engineering, Database Systems, Computer Networks, Cybersecurity, Operating Systems, Web Development</p>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="resume-section glass-card mb-4" data-aos="fade-up">
+          <h2 class="resume-section-title"><i class="fas fa-code me-2"></i>Technical Skills</h2>
+          <div class="resume-skills-grid">
+            <div class="skill-group">
+              <h4>Languages</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span><span class="tech-tag">JavaScript</span><span class="tech-tag">SQL</span><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Frameworks</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">Flask</span><span class="tech-tag">Django</span><span class="tech-tag">FastAPI</span><span class="tech-tag">React</span><span class="tech-tag">Bootstrap</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Databases</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">SQLite</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">MySQL</span><span class="tech-tag">SQLAlchemy</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Tools</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">Git</span><span class="tech-tag">GitHub</span><span class="tech-tag">Postman</span><span class="tech-tag">VS Code</span><span class="tech-tag">Linux</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="resume-section glass-card" data-aos="fade-up">
+          <h2 class="resume-section-title"><i class="fas fa-folder me-2"></i>Key Projects</h2>
+          <div class="resume-entry">
+            <div class="resume-entry-header">
+              <h3>Explore PK – AI Tourism & Booking Platform</h3>
+              <span class="resume-period">Python · Streamlit · SQLite</span>
+            </div>
+            <p>AI-powered tourism booking platform with authentication, recommendation system, chatbot integration, live weather API, admin dashboard, and invoice generation.</p>
+          </div>
+          <hr class="resume-divider">
+          <div class="resume-entry">
+            <div class="resume-entry-header">
+              <h3>IoT Resource Analytics Dashboard</h3>
+              <span class="resume-period">Django · React · PostgreSQL</span>
+            </div>
+            <p>Scalable backend APIs using Django REST Framework with PostgreSQL database and React-based analytics dashboard for real-time IoT resource monitoring.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

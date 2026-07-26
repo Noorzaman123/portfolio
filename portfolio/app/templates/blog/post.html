@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} – Noor Zaman{% endblock %}
+{% block meta_description %}{{ post.meta_description or post.summary or post.title }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.summary }}{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <nav aria-label="breadcrumb" data-aos="fade-up">
+      <ol class="breadcrumb glass-breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('blog.index') }}">Blog</a></li>
+        {% if post.category %}
+        <li class="breadcrumb-item"><a href="{{ url_for('blog.category', slug=post.category.slug) }}">{{ post.category.name }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">{{ post.title[:40] }}…</li>
+      </ol>
+    </nav>
+    <div class="page-hero-content" data-aos="fade-up">
+      {% if post.category %}<span class="section-tag">{{ post.category.name }}</span>{% endif %}
+      <h1 class="page-title" style="font-size:clamp(1.8rem,4vw,3rem)">{{ post.title }}</h1>
+      <div class="post-meta d-flex flex-wrap gap-4 mt-3">
+        <span><i class="fas fa-calendar me-1"></i>{{ post.created_at.strftime('%B %d, %Y') }}</span>
+        <span><i class="fas fa-clock me-1"></i>{{ post.read_time }} min read</span>
+        <span><i class="fas fa-eye me-1"></i>{{ post.views }} views</span>
+        <span><i class="fas fa-comments me-1"></i>{{ comments|length }} comments</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Article -->
+      <div class="col-lg-8">
+        {% if post.image_url %}
+        <div class="post-hero-img" data-aos="fade-up">
+          <img src="{{ post.image_url }}" alt="{{ post.title }}" class="img-fluid rounded-lg w-100" />
+        </div>
+        {% endif %}
+
+        <article class="post-content glass-card mt-4" data-aos="fade-up">
+          {{ content | safe }}
+        </article>
+
+        <!-- Share -->
+        <div class="post-share glass-card mt-4" data-aos="fade-up">
+          <span class="share-label">Share this article:</span>
+          <div class="share-buttons">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url | urlencode }}" target="_blank" rel="noopener" class="share-btn linkedin">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://twitter.com/intent/tweet?url={{ request.url | urlencode }}&text={{ post.title | urlencode }}" target="_blank" rel="noopener" class="share-btn twitter">
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <button class="share-btn copy" onclick="navigator.clipboard.writeText(window.location.href); this.innerHTML='<i class=\'fas fa-check\'></i>'">
+              <i class="fas fa-link"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="comments-section mt-5" data-aos="fade-up">
+          <h3 class="section-title mb-4">
+            Comments <span class="gradient-text">({{ comments|length }})</span>
+          </h3>
+
+          {% for comment in comments %}
+          <div class="comment-card glass-card mb-3">
+            <div class="comment-header">
+              <div class="comment-avatar">{{ comment.name[0].upper() }}</div>
+              <div>
+                <h5 class="comment-name">{{ comment.name }}</h5>
+                <span class="comment-date">{{ comment.created_at.strftime('%B %d, %Y') }}</span>
+              </div>
+            </div>
+            <p class="comment-body">{{ comment.content }}</p>
+          </div>
+          {% else %}
+          <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+          {% endfor %}
+
+          <!-- Comment Form -->
+          <div class="comment-form-card glass-card mt-4">
+            <h4 class="mb-4">Leave a Comment</h4>
+            <form method="POST" action="{{ url_for('blog.post', slug=post.slug) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-group-float">
+                    <input type="text" name="name" class="form-control-custom" placeholder=" " required />
+                    <label>Your Name *</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group-float">
+                    <input type="email" name="email" class="form-control-custom" placeholder=" " required />
+                    <label>Email Address *</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-float">
+                    <textarea name="content" class="form-control-custom" rows="4" placeholder=" " required></textarea>
+                    <label>Your Comment *</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <p class="text-muted small mb-2"><i class="fas fa-info-circle me-1"></i>Your comment will appear after review.</p>
+                  <button type="submit" class="btn btn-primary-glow">
+                    <i class="fas fa-paper-plane me-2"></i>Submit Comment
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="sticky-top" style="top:90px">
+          <!-- Related Posts -->
+          {% if related %}
+          <div class="blog-sidebar-widget glass-card mb-4" data-aos="fade-left">
+            <h3 class="sidebar-title">Related Articles</h3>
+            {% for rp in related %}
+            <div class="sidebar-post">
+              <a href="{{ url_for('blog.post', slug=rp.slug) }}" class="sidebar-post-title">{{ rp.title }}</a>
+              <span class="blog-meta"><i class="fas fa-clock me-1"></i>{{ rp.read_time }} min</span>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Author Card -->
+          <div class="blog-sidebar-widget glass-card" data-aos="fade-left" data-aos-delay="100">
+            <h3 class="sidebar-title">About the Author</h3>
+            <div class="author-card text-center">
+              <div class="author-avatar">NZ</div>
+              <h4 class="author-name">Noor Zaman</h4>
+              <p class="author-role text-muted">Python Backend Developer</p>
+              <p class="author-bio small">CS graduate passionate about Python, Flask, and cybersecurity. Writing about backend development and software engineering.</p>
+              <div class="social-links mt-3 justify-content-center">
+                <a href="{{ site_settings.get('linkedin_url', 'https://www.linkedin.com/in/noor-zaman-99b806291') | external_url }}" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#github-placeholder" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

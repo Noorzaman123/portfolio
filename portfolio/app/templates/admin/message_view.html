@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% block title %}Message from {{ message.name }}{% endblock %}
+{% block page_title %}View Message{% endblock %}
+
+{% block content %}
+<div class="admin-page-header d-flex justify-content-between">
+  <h2>Message from {{ message.name }}</h2>
+  <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-admin">
+    <i class="fas fa-arrow-left me-2"></i>Back
+  </a>
+</div>
+<div class="admin-card">
+  <div class="admin-card-body">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4 text-muted">From</dt><dd class="col-sm-8 fw-600">{{ message.name }}</dd>
+          <dt class="col-sm-4 text-muted">Email</dt><dd class="col-sm-8"><a href="mailto:{{ message.email }}">{{ message.email }}</a></dd>
+          <dt class="col-sm-4 text-muted">Phone</dt><dd class="col-sm-8">{{ message.phone or '—' }}</dd>
+          <dt class="col-sm-4 text-muted">Subject</dt><dd class="col-sm-8">{{ message.subject }}</dd>
+          <dt class="col-sm-4 text-muted">Date</dt><dd class="col-sm-8">{{ message.created_at.strftime('%B %d, %Y at %H:%M') }}</dd>
+          <dt class="col-sm-4 text-muted">IP</dt><dd class="col-sm-8">{{ message.ip_address or '—' }}</dd>
+        </dl>
+      </div>
+    </div>
+    <hr style="border-color:var(--admin-border)">
+    <h5>Message</h5>
+    <div class="admin-card p-3 mt-2" style="white-space:pre-wrap">{{ message.message }}</div>
+    <div class="d-flex gap-3 mt-4">
+      <a href="mailto:{{ message.email }}?subject=Re: {{ message.subject }}" class="btn btn-admin-primary">
+        <i class="fas fa-reply me-2"></i>Reply via Email
+      </a>
+      <form method="POST" action="{{ url_for('admin.message_delete', msg_id=message.id) }}" onsubmit="return confirm('Delete?')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash me-2"></i>Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

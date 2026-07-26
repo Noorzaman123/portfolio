@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#31104b"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="480" rx="32" fill="url(#bgGrad)"/>
+  
+  <circle cx="200" cy="180" r="140" fill="#6366f1" opacity="0.15" filter="url(#glow)"/>
+  <circle cx="280" cy="320" r="100" fill="#06b6d4" opacity="0.1" filter="url(#glow)"/>
+
+  <path d="M40,60 L120,60 M40,80 L180,80 M40,100 L90,100" stroke="#6366f1" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  <path d="M260,60 L360,60 M290,80 L360,80" stroke="#06b6d4" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+
+  <g transform="translate(0, 20)">
+    <path d="M110,400 C110,320 140,280 200,280 C260,280 290,320 290,400 Z" fill="url(#avatarGrad)"/>
+    <path d="M150,330 L200,380 L250,330" fill="none" stroke="url(#accentGrad)" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="200" cy="200" r="65" fill="url(#avatarGrad)"/>
+    <rect x="160" y="185" width="35" height="22" rx="6" fill="#0f172a" stroke="#06b6d4" stroke-width="3"/>
+    <rect x="205" y="185" width="35" height="22" rx="6" fill="#0f172a" stroke="#06b6d4" stroke-width="3"/>
+    <line x1="195" y1="196" x2="205" y2="196" stroke="#06b6d4" stroke-width="3"/>
+    <path d="M185,235 Q200,248 215,235" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  </g>
+
+  <rect x="130" y="400" width="140" height="42" rx="21" fill="url(#accentGrad)"/>
+  <text x="200" y="427" font-family="system-ui, sans-serif" font-weight="800" font-size="18" fill="#ffffff" text-anchor="middle" letter-spacing="2">NOOR ZAMAN</text>
+</svg>

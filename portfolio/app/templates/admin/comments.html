@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Comments{% endblock %}
+{% block page_title %}Blog Comments{% endblock %}
+
+{% block content %}
+<div class="admin-page-header"><h2>Blog Comments</h2></div>
+<div class="admin-card">
+  <div class="admin-card-body p-0">
+    {% if comments %}
+    <div class="table-responsive">
+      <table class="admin-table">
+        <thead><tr><th>Author</th><th>Post</th><th>Comment</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for comment in comments %}
+          <tr>
+            <td><div class="fw-500">{{ comment.name }}</div><div class="text-muted small">{{ comment.email }}</div></td>
+            <td><a href="{{ url_for('blog.post', slug=comment.post.slug) }}" target="_blank">{{ comment.post.title[:30] }}</a></td>
+            <td>{{ comment.content[:80] }}{% if comment.content|length > 80 %}…{% endif %}</td>
+            <td>{{ comment.created_at.strftime('%b %d, %Y') }}</td>
+            <td>
+              {% if comment.is_approved %}
+                <span class="badge bg-success">Approved</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="table-actions">
+                {% if not comment.is_approved %}
+                <form method="POST" action="{{ url_for('admin.comment_approve', comment_id=comment.id) }}" class="d-inline">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <button type="submit" class="btn-action text-success" title="Approve"><i class="fas fa-check"></i></button>
+                </form>
+                {% endif %}
+                <form method="POST" action="{{ url_for('admin.comment_delete', comment_id=comment.id) }}" class="d-inline" onsubmit="return confirm('Delete?')">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <button type="submit" class="btn-action text-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5"><p class="text-muted">No comments yet.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

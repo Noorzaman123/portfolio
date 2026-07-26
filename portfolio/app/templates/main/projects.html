@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Projects – Noor Zaman{% endblock %}
+{% block meta_description %}Explore Noor Zaman's portfolio of Python, Flask, Django, and AI projects. From tourism platforms to IoT dashboards.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Portfolio</span>
+      <h1 class="page-title">My <span class="gradient-text">Projects</span></h1>
+      <p class="page-subtitle">A curated collection of work across backend development, AI, IoT, and more.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+
+    <!-- Search & Filter Bar -->
+    <form method="GET" class="projects-toolbar glass-card mb-5" data-aos="fade-up">
+      <div class="toolbar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" name="search" value="{{ search }}" placeholder="Search projects…" class="toolbar-input" />
+      </div>
+      <div class="toolbar-filters d-flex flex-wrap gap-2">
+        <a href="{{ url_for('main.projects') }}" class="filter-btn {% if not selected_category %}active{% endif %}">All</a>
+        {% for cat in categories %}
+        <a href="{{ url_for('main.projects', category=cat) }}" class="filter-btn {% if selected_category == cat %}active{% endif %}">{{ cat }}</a>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-primary-glow btn-sm">
+        <i class="fas fa-search me-1"></i> Search
+      </button>
+    </form>
+
+    <!-- Projects Grid -->
+    {% if projects.items %}
+    <div class="row g-4">
+      {% for project in projects.items %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 % 3 * 100 }}">
+        <div class="project-card glass-card h-100">
+          <div class="project-card-img">
+            {% if project.image_url %}
+              <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy" />
+            {% else %}
+              <div class="project-placeholder">
+                <i class="fas fa-code fa-3x"></i>
+              </div>
+            {% endif %}
+            {% if project.is_featured %}
+            <div class="project-featured-badge">
+              <i class="fas fa-star me-1"></i>Featured
+            </div>
+            {% endif %}
+            <div class="project-overlay">
+              <div class="project-overlay-actions">
+                {% if project.github_url %}
+                  <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn-circle" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                {% endif %}
+                {% if project.live_url %}
+                  <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn-circle" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                {% endif %}
+                <a href="{{ url_for('main.project_detail', slug=project.slug) }}" class="btn-circle" aria-label="View"><i class="fas fa-eye"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            {% if project.category %}<span class="project-category">{{ project.category }}</span>{% endif %}
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-desc">{{ project.short_description }}</p>
+            <div class="tech-tags mt-3">
+              {% for tech in project.tech_stack[:5] %}
+                <span class="tech-tag">{{ tech }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <a href="{{ url_for('main.project_detail', slug=project.slug) }}" class="btn-text-link">
+              View Details <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+            <span class="project-views"><i class="fas fa-eye me-1"></i>{{ project.views }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if projects.pages > 1 %}
+    <nav class="mt-5 d-flex justify-content-center" data-aos="fade-up">
+      <ul class="pagination glass-pagination">
+        {% if projects.has_prev %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('main.projects', page=projects.prev_num, category=selected_category, search=search) }}">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        {% endif %}
+        {% for p in projects.iter_pages() %}
+          {% if p %}
+          <li class="page-item {% if p == projects.page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('main.projects', page=p, category=selected_category, search=search) }}">{{ p }}</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><span class="page-link">…</span></li>
+          {% endif %}
+        {% endfor %}
+        {% if projects.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('main.projects', page=projects.next_num, category=selected_category, search=search) }}">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state text-center py-5" data-aos="fade-up">
+      <i class="fas fa-search fa-3x mb-3" style="color:var(--text-muted)"></i>
+      <h4>No projects found</h4>
+      <p class="text-muted">Try a different search term or category.</p>
+      <a href="{{ url_for('main.projects') }}" class="btn btn-glass mt-3">Clear Filters</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

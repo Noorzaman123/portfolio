@@ -1,0 +1,94 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ 'Edit' if project else 'New' }} Project{% endblock %}
+{% block page_title %}{{ 'Edit' if project else 'New' }} Project{% endblock %}
+
+{% block content %}
+<div class="admin-page-header d-flex justify-content-between align-items-center">
+  <div>
+    <h2>{{ 'Edit' if project else 'New' }} Project</h2>
+  </div>
+  <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-admin">
+    <i class="fas fa-arrow-left me-2"></i>Back to Projects
+  </a>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-body">
+    <form method="POST" enctype="multipart/form-data"
+          action="{{ url_for('admin.project_edit', project_id=project.id) if project else url_for('admin.project_new') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+      <div class="row g-4">
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label">Title *</label>
+            <input type="text" name="title" class="form-control admin-input" value="{{ project.title if project else '' }}" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Short Description *</label>
+            <input type="text" name="short_description" class="form-control admin-input" value="{{ project.short_description if project else '' }}" required maxlength="300" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Long Description (HTML supported)</label>
+            <textarea name="long_description" class="form-control admin-input" rows="10">{{ project.long_description if project else '' }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tech Stack (comma-separated)</label>
+            <input type="text" name="tech_stack" class="form-control admin-input" value="{{ project.tech_stack|join(', ') if project else '' }}" placeholder="Python, Flask, SQLite, React" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Features (one per line)</label>
+            <textarea name="features" class="form-control admin-input" rows="6" placeholder="Live Weather Integration&#10;Chatbot&#10;Booking System">{{ project.features|join('\n') if project else '' }}</textarea>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" name="category" class="form-control admin-input" value="{{ project.category if project else '' }}" placeholder="AI, Web, IoT, etc." />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">GitHub URL</label>
+            <input type="url" name="github_url" class="form-control admin-input" value="{{ project.github_url if project else '' }}" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Live Demo URL</label>
+            <input type="url" name="live_url" class="form-control admin-input" value="{{ project.live_url if project else '' }}" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image URL (or upload below)</label>
+            <input type="url" name="image_url" class="form-control admin-input" value="{{ project.image_url if project else '' }}" placeholder="https://…" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Upload Image</label>
+            <input type="file" name="image" class="form-control admin-input" accept="image/*" />
+          </div>
+          {% if project and project.image_url %}
+          <div class="mb-3">
+            <img src="{{ project.image_url }}" alt="{{ project.title }}" class="img-fluid rounded" style="max-height:150px" />
+          </div>
+          {% endif %}
+          <div class="mb-3">
+            <label class="form-label">Display Order</label>
+            <input type="number" name="order" class="form-control admin-input" value="{{ project.order if project else 0 }}" min="0" />
+          </div>
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="is_featured" id="is_featured" {{ 'checked' if project and project.is_featured else '' }} />
+              <label class="form-check-label" for="is_featured">Featured Project</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-3" style="border-color:var(--admin-border)">
+      <div class="d-flex gap-3">
+        <button type="submit" class="btn btn-admin-primary">
+          <i class="fas fa-save me-2"></i>{{ 'Update' if project else 'Create' }} Project
+        </button>
+        <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-admin">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

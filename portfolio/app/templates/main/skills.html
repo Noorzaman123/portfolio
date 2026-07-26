@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Skills & Tech Stack – Noor Zaman{% endblock %}
+{% block meta_description %}Explore Noor Zaman's technical skills including Python, Flask, Django, FastAPI, SQL, React, cybersecurity tools, and machine learning.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Expertise</span>
+      <h1 class="page-title">Skills & <span class="gradient-text">Technologies</span></h1>
+      <p class="page-subtitle">My technical toolkit — built through projects, internships, and continuous learning.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+
+    <!-- Category Filter -->
+    <div class="skills-filter d-flex flex-wrap justify-content-center gap-2 mb-5" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All Skills</button>
+      {% for cat_key, cat_label in [
+        ('programming','Programming'),('backend','Backend'),('frontend','Frontend'),
+        ('database','Database'),('tools','Tools'),('cybersecurity','Cybersecurity'),('ml','Machine Learning')
+      ] %}
+        {% if cat_key in skills_by_category %}
+        <button class="filter-btn" data-filter="{{ cat_key }}">{{ cat_label }}</button>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% set cat_labels = {
+      'programming': 'Programming Languages',
+      'backend': 'Backend Frameworks',
+      'frontend': 'Frontend Development',
+      'database': 'Databases',
+      'tools': 'Tools & DevOps',
+      'cybersecurity': 'Cybersecurity',
+      'ml': 'Machine Learning'
+    } %}
+
+    {% for cat_key, skills in skills_by_category.items() %}
+    <div class="skills-category-section" data-category="{{ cat_key }}" data-aos="fade-up">
+      <div class="category-header mb-4">
+        <h2 class="category-title">{{ cat_labels.get(cat_key, cat_key|title) }}</h2>
+        <div class="category-line"></div>
+      </div>
+
+      <div class="row g-4 mb-5">
+        {% for skill in skills %}
+        <div class="col-lg-6 col-md-6 skill-item" data-category="{{ skill.category }}">
+          <div class="skill-card glass-card" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 50 }}">
+            <div class="skill-header">
+              <div class="skill-name-wrap">
+                {% if skill.icon %}
+                  <i class="{{ skill.icon }}" style="color:{{ skill.color }}"></i>
+                {% endif %}
+                <span class="skill-name">{{ skill.name }}</span>
+              </div>
+              <span class="skill-level-badge">{{ skill.level }}%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-level="{{ skill.level }}" style="--skill-color:{{ skill.color }}"></div>
+            </div>
+            <div class="skill-bar-labels">
+              <span>Beginner</span>
+              <span>Intermediate</span>
+              <span>Advanced</span>
+              <span>Expert</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Tech Cloud -->
+    <div class="section-header text-center mb-4 mt-4" data-aos="fade-up">
+      <h3 class="section-title">Technology <span class="gradient-text">Cards</span></h3>
+    </div>
+    <div class="tech-grid" data-aos="fade-up">
+      {% set all_techs = [
+        ('Python','fab fa-python','#3776AB'),('Flask','fas fa-flask','#6366f1'),
+        ('Django','fas fa-leaf','#092E20'),('FastAPI','fas fa-bolt','#009688'),
+        ('JavaScript','fab fa-js-square','#F7DF1E'),('React','fab fa-react','#61DAFB'),
+        ('HTML5','fab fa-html5','#E34F26'),('CSS3','fab fa-css3-alt','#1572B6'),
+        ('Bootstrap','fab fa-bootstrap','#7952B3'),('PostgreSQL','fas fa-database','#336791'),
+        ('MySQL','fas fa-database','#4479A1'),('SQLite','fas fa-database','#003B57'),
+        ('Git','fab fa-git-alt','#F05032'),('GitHub','fab fa-github','#f0f0f0'),
+        ('Linux','fab fa-linux','#FCC624'),('Docker','fab fa-docker','#2496ED'),
+        ('Pandas','fas fa-table','#150458'),('NumPy','fas fa-calculator','#4DABCF'),
+        ('Postman','fas fa-paper-plane','#FF6C37'),('VS Code','fas fa-code','#007ACC'),
+      ] %}
+      {% for name, icon, color in all_techs %}
+      <div class="tech-card glass-card">
+        <i class="{{ icon }}" style="color:{{ color }}; font-size:1.8rem;"></i>
+        <span>{{ name }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Skills filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.skills-category-section').forEach(section => {
+      if (filter === 'all' || section.dataset.category === filter) {
+        section.style.display = 'block';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Animate skill bars on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fill = entry.target.querySelector('.skill-bar-fill');
+      if (fill) {
+        fill.style.width = fill.dataset.level + '%';
+      }
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+</script>
+{% endblock %}

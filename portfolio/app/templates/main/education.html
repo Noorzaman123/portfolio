@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Education – Noor Zaman{% endblock %}
+{% block meta_description %}Academic background of Noor Zaman – Computer Science graduate with expertise in software engineering and cybersecurity.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Academic</span>
+      <h1 class="page-title">My <span class="gradient-text">Education</span></h1>
+      <p class="page-subtitle">The academic foundation behind my technical expertise.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    {% if education_list %}
+    <div class="row g-4 justify-content-center">
+      {% for edu in education_list %}
+      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+        <div class="edu-card glass-card">
+          <div class="edu-header">
+            <div class="edu-logo">
+              {% if edu.logo_url %}
+                <img src="{{ edu.logo_url }}" alt="{{ edu.institution }}" />
+              {% else %}
+                <div class="edu-initial">{{ edu.institution[0] }}</div>
+              {% endif %}
+            </div>
+            <div class="edu-info">
+              <h2 class="edu-degree">{{ edu.degree }}{% if edu.field %} in {{ edu.field }}{% endif %}</h2>
+              <p class="edu-institution">{{ edu.institution }}</p>
+              {% if edu.location %}
+                <p class="edu-location"><i class="fas fa-map-marker-alt me-1"></i>{{ edu.location }}</p>
+              {% endif %}
+            </div>
+            <div class="edu-period-badge">
+              <i class="fas fa-calendar me-1"></i>
+              {{ edu.start_year }} – {{ 'Present' if edu.is_current else edu.end_year }}
+              {% if edu.is_current %}<span class="current-badge ms-2">Ongoing</span>{% endif %}
+            </div>
+          </div>
+
+          {% if edu.gpa %}
+          <div class="edu-gpa mt-3">
+            <span class="gpa-badge"><i class="fas fa-star me-1"></i>GPA: {{ edu.gpa }}</span>
+          </div>
+          {% endif %}
+
+          {% if edu.description %}
+          <p class="edu-description mt-3">{{ edu.description }}</p>
+          {% endif %}
+
+          <div class="edu-tags mt-3">
+            <span class="tech-tag">Data Structures</span>
+            <span class="tech-tag">Algorithms</span>
+            <span class="tech-tag">Software Engineering</span>
+            <span class="tech-tag">Databases</span>
+            <span class="tech-tag">Networking</span>
+            <span class="tech-tag">Operating Systems</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state text-center py-5">
+      <i class="fas fa-graduation-cap fa-3x mb-3" style="color:var(--text-muted)"></i>
+      <h4>Education details coming soon</h4>
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a href="{{ url_for('main.certificates') }}" class="btn btn-glass">
+        <i class="fas fa-certificate me-2"></i>View Certificates
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

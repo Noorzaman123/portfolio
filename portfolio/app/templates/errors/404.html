@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}404 – Page Not Found | Noor Zaman{% endblock %}
+
+{% block content %}
+<section class="error-section d-flex align-items-center justify-content-center min-vh-100">
+  <div class="error-bg-orb orb-1"></div>
+  <div class="error-bg-orb orb-2"></div>
+  <div class="container text-center" data-aos="zoom-in">
+    <div class="error-code gradient-text">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-subtitle">{{ message or "Oops! The page you're looking for seems to have wandered off into the digital void." }}</p>
+    <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
+      <a href="{{ url_for('main.index') }}" class="btn btn-primary-glow">
+        <i class="fas fa-home me-2"></i>Back to Home
+      </a>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-glass">
+        <i class="fas fa-envelope me-2"></i>Contact Me
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

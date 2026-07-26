@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}About – Noor Zaman{% endblock %}
+{% block meta_description %}Learn about Noor Zaman – Computer Science graduate, Python backend developer, Flask engineer, and cybersecurity enthusiast based in Peshawar, Pakistan.{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="page-hero-content" data-aos="fade-up">
+      <span class="section-tag">Who I Am</span>
+      <h1 class="page-title">About <span class="gradient-text">Me</span></h1>
+      <p class="page-subtitle">Passionate developer. Problem solver. Lifelong learner.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Bio Section ──────────────────────────────────────────────────── -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="about-avatar-wrapper">
+          <div class="about-avatar-bg"></div>
+          <div class="about-avatar glass-card">
+            <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Noor Zaman" class="about-avatar-img" onerror="this.onerror=null; this.src='{{ url_for('static', filename='assets/avatar.svg') }}';" />
+            <div class="avatar-badge">
+              <i class="fas fa-check-circle"></i>
+              <span>Available for Hire</span>
+            </div>
+          </div>
+          <div class="about-info-card glass-card">
+            <div class="info-row"><i class="fas fa-map-marker-alt"></i><span>Peshawar, Pakistan</span></div>
+            <div class="info-row"><i class="fas fa-envelope"></i><span>noorzamanktk2@gmail.com</span></div>
+            <div class="info-row"><i class="fas fa-phone"></i><span>+92 333 4791760</span></div>
+            <div class="info-row"><i class="fas fa-graduation-cap"></i><span>Computer Science Graduate</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <span class="section-tag">My Story</span>
+        <h2 class="section-title mb-4">Building the <span class="gradient-text">Future</span>, One API at a Time</h2>
+
+        <p class="about-text">
+          I'm <strong>Noor Zaman</strong>, a Computer Science graduate from Peshawar, Pakistan with a deep passion for
+          backend development, scalable architectures, and cybersecurity. My journey began with curiosity about how
+          the internet works — and quickly evolved into building production-ready applications.
+        </p>
+        <p class="about-text mt-3">
+          I specialize in Python-based web development using <strong>Flask, Django, and FastAPI</strong>, designing
+          RESTful APIs, managing SQL databases, and building automation tools. I've contributed to real-world
+          projects through internships at <strong>Arch Technologies</strong> and the
+          <strong>National Telecommunication Corporation (NTC)</strong>.
+        </p>
+        <p class="about-text mt-3">
+          Beyond code, I'm a cybersecurity enthusiast exploring vulnerability assessment, network security,
+          and ethical hacking. I believe robust security is not an afterthought — it's a foundation.
+        </p>
+
+        <div class="about-traits mt-4 row g-3">
+          <div class="col-6">
+            <div class="trait-item">
+              <i class="fas fa-brain text-primary"></i>
+              <span>Problem Solver</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="trait-item">
+              <i class="fas fa-shield-alt text-primary"></i>
+              <span>Security Minded</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="trait-item">
+              <i class="fas fa-rocket text-primary"></i>
+              <span>Fast Learner</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="trait-item">
+              <i class="fas fa-users text-primary"></i>
+              <span>Team Player</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-actions mt-5 d-flex gap-3 flex-wrap">
+          <a href="{{ url_for('main.download_resume') }}" class="btn btn-primary-glow">
+            <i class="fas fa-download me-2"></i>Download CV
+          </a>
+          <a href="{{ url_for('main.contact') }}" class="btn btn-glass">
+            <i class="fas fa-paper-plane me-2"></i>Hire Me
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Mission & Vision ──────────────────────────────────────────────── -->
+<section class="section-padding bg-section-alt">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="mission-card glass-card h-100">
+          <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>My Mission</h3>
+          <p>To build clean, efficient, and secure backend systems that power meaningful digital products. I strive to write code that not only works but is maintainable, well-documented, and scalable for the long term.</p>
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="mission-card glass-card h-100">
+          <div class="mission-icon"><i class="fas fa-eye"></i></div>
+          <h3>My Vision</h3>
+          <p>To become a leading Python backend developer and cybersecurity professional, contributing to open-source projects and helping organizations build resilient, secure digital infrastructure across Pakistan and globally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Interests ─────────────────────────────────────────────────────── -->
+<section class="section-padding">
+  <div class="container">
+    <div class="section-header text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Passions</span>
+      <h2 class="section-title">Areas of <span class="gradient-text">Interest</span></h2>
+    </div>
+    <div class="row g-4">
+      {% set interests = [
+        ('Backend Development', 'fas fa-server', 'Designing robust RESTful APIs and microservices with Flask, Django, and FastAPI.', '#6366f1'),
+        ('Cybersecurity', 'fas fa-shield-alt', 'Exploring vulnerability assessment, network security, and ethical hacking techniques.', '#8b5cf6'),
+        ('Artificial Intelligence', 'fas fa-robot', 'Applying ML fundamentals with scikit-learn, Pandas, and NumPy to real-world problems.', '#06b6d4'),
+        ('Database Engineering', 'fas fa-database', 'Designing efficient schemas, query optimization, and working with SQL databases.', '#f59e0b'),
+        ('Web Scraping', 'fas fa-spider', 'Building scrapers with BeautifulSoup and Selenium for data extraction and automation.', '#10b981'),
+        ('Open Source', 'fab fa-github', 'Contributing to open-source projects and building tools for the developer community.', '#ec4899'),
+      ] %}
+      {% for title, icon, desc, color in interests %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="interest-card glass-card h-100">
+          <div class="interest-icon" style="--icon-color:{{ color }}">
+            <i class="{{ icon }}"></i>
+          </div>
+          <h4>{{ title }}</h4>
+          <p>{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ─── Timeline ──────────────────────────────────────────────────────── -->
+<section class="section-padding bg-section-alt">
+  <div class="container">
+    <div class="section-header text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Journey</span>
+      <h2 class="section-title">Career <span class="gradient-text">Timeline</span></h2>
+    </div>
+
+    <div class="timeline">
+      {% for exp in experiences %}
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content glass-card">
+          <div class="timeline-header">
+            <div>
+              <h4 class="timeline-role">{{ exp.title }}</h4>
+              <p class="timeline-company">{{ exp.company }}{% if exp.location %} · {{ exp.location }}{% endif %}</p>
+            </div>
+            <span class="timeline-period">
+              {{ exp.start_date }} – {{ 'Present' if exp.is_current else exp.end_date }}
+            </span>
+          </div>
+          {% if exp.description %}
+          <p class="timeline-desc">{{ exp.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for edu in education %}
+      <div class="timeline-item timeline-edu" data-aos="fade-up">
+        <div class="timeline-marker edu-marker"></div>
+        <div class="timeline-content glass-card">
+          <div class="timeline-header">
+            <div>
+              <h4 class="timeline-role">{{ edu.degree }}{% if edu.field %} in {{ edu.field }}{% endif %}</h4>
+              <p class="timeline-company">{{ edu.institution }}{% if edu.location %} · {{ edu.location }}{% endif %}</p>
+            </div>
+            <span class="timeline-period">{{ edu.start_year }} – {{ 'Present' if edu.is_current else edu.end_year }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

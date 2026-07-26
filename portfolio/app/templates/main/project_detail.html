@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} – Noor Zaman{% endblock %}
+{% block meta_description %}{{ project.short_description }}{% endblock %}
+{% block og_type %}article{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <nav aria-label="breadcrumb" data-aos="fade-up">
+      <ol class="breadcrumb glass-breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('main.projects') }}">Projects</a></li>
+        <li class="breadcrumb-item active">{{ project.title }}</li>
+      </ol>
+    </nav>
+    <div class="page-hero-content" data-aos="fade-up">
+      {% if project.category %}<span class="section-tag">{{ project.category }}</span>{% endif %}
+      <h1 class="page-title">{{ project.title }}</h1>
+      <p class="page-subtitle">{{ project.short_description }}</p>
+      <div class="d-flex gap-3 flex-wrap mt-4">
+        {% if project.github_url %}
+        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-glass">
+          <i class="fab fa-github me-2"></i>View on GitHub
+        </a>
+        {% endif %}
+        {% if project.live_url %}
+        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-glow">
+          <i class="fas fa-external-link-alt me-2"></i>Live Demo
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        {% if project.image_url %}
+        <div class="project-detail-img" data-aos="fade-up">
+          <img src="{{ project.image_url }}" alt="{{ project.title }}" class="img-fluid rounded-lg" />
+        </div>
+        {% endif %}
+
+        {% if project.long_description %}
+        <div class="project-detail-content glass-card mt-4" data-aos="fade-up">
+          <h2 class="detail-section-title">Project Overview</h2>
+          <div class="project-description">
+            {{ project.long_description | safe }}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if project.features %}
+        <div class="glass-card mt-4" data-aos="fade-up">
+          <h2 class="detail-section-title">Key Features</h2>
+          <ul class="feature-list">
+            {% for feature in project.features %}
+            <li class="feature-item">
+              <i class="fas fa-check-circle text-primary me-2"></i>{{ feature }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4" data-aos="fade-left">
+        <div class="project-sidebar">
+          <div class="glass-card mb-4">
+            <h3 class="sidebar-title">Tech Stack</h3>
+            <div class="tech-tags flex-wrap">
+              {% for tech in project.tech_stack %}
+              <span class="tech-tag tech-tag-lg">{{ tech }}</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="glass-card mb-4">
+            <h3 class="sidebar-title">Project Info</h3>
+            <div class="info-list">
+              <div class="info-row">
+                <span class="info-label"><i class="fas fa-tag me-2"></i>Category</span>
+                <span class="info-value">{{ project.category or 'N/A' }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label"><i class="fas fa-eye me-2"></i>Views</span>
+                <span class="info-value">{{ project.views }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label"><i class="fas fa-calendar me-2"></i>Created</span>
+                <span class="info-value">{{ project.created_at.strftime('%b %Y') }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card mb-4">
+            <h3 class="sidebar-title">Links</h3>
+            <div class="d-flex flex-column gap-2">
+              {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-glass w-100">
+                <i class="fab fa-github me-2"></i>GitHub Repository
+              </a>
+              {% endif %}
+              {% if project.live_url %}
+              <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-glow w-100">
+                <i class="fas fa-external-link-alt me-2"></i>Live Demo
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Projects -->
+    {% if related %}
+    <div class="mt-5">
+      <h2 class="section-title mb-4" data-aos="fade-up">Related <span class="gradient-text">Projects</span></h2>
+      <div class="row g-4">
+        {% for rp in related %}
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+          <div class="project-card glass-card h-100">
+            <div class="project-card-img">
+              {% if rp.image_url %}
+                <img src="{{ rp.image_url }}" alt="{{ rp.title }}" loading="lazy" />
+              {% else %}
+                <div class="project-placeholder"><i class="fas fa-code fa-2x"></i></div>
+              {% endif %}
+            </div>
+            <div class="project-card-body">
+              <h4 class="project-title">{{ rp.title }}</h4>
+              <p class="project-desc">{{ rp.short_description }}</p>
+            </div>
+            <div class="project-card-footer">
+              <a href="{{ url_for('main.project_detail', slug=rp.slug) }}" class="btn-text-link">
+                View <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
